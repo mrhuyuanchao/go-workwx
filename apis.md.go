@@ -911,3 +911,17 @@ func (c *WorkwxApp) execCancelMomentTask(req reqCancelMomentTask) (respCancelMom
 
 	return resp, nil
 }
+
+// execUploadAttachment 上传附件资源
+func (c *WorkwxApp) execUploadAttachment(req reqUploadAttachment) (respUploadAttachment, error) {
+	var resp respUploadAttachment
+	err := c.executeQyapiMediaUpload("/cgi-bin/media/upload_attachment", req, &resp, true)
+	if err != nil {
+		return respUploadAttachment{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respUploadAttachment{}, bizErr
+	}
+
+	return resp, nil
+}
