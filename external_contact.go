@@ -254,7 +254,7 @@ func (c *WorkwxApp) ExternalContactListFollowUser() (*ExternalContactFollowUserL
 }
 
 // ExternalContactAddContact 配置客户联系「联系我」方式
-func (c *WorkwxApp) ExternalContactAddContact(t int, scene int, style int, remark string, skipVerify bool, state string, user []string, party []int, isTemp bool, expiresIn int, chatExpiresIn int, unionID string, conclusions Conclusions) (*ExternalContactAddContact, error) {
+func (c *WorkwxApp) ExternalContactAddContact(t int, scene int, style int, remark string, skipVerify, isExclusive bool, state string, user []string, party []int, isTemp bool, expiresIn int, chatExpiresIn int, unionID string, conclusions Conclusions) (*ExternalContactAddContact, error) {
 	resp, err := c.execAddContactExternalContact(
 		reqAddContactExternalContact{
 			ExternalContactWay{
@@ -270,6 +270,7 @@ func (c *WorkwxApp) ExternalContactAddContact(t int, scene int, style int, remar
 				ExpiresIn:     expiresIn,
 				ChatExpiresIn: chatExpiresIn,
 				UnionID:       unionID,
+				IsExclusive:   isExclusive,
 				Conclusions:   conclusions,
 			},
 		})

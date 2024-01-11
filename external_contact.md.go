@@ -304,6 +304,8 @@ type ExternalContactWay struct {
 	ChatExpiresIn int `json:"chat_expires_in"`
 	// UnionID 可进行临时会话的客户UnionID，该参数仅在is_temp为true时有效，如不指定则不进行限制
 	UnionID string `json:"unionid"`
+	// IsExclusive 是否开启同一外部企业客户只能添加同一个员工，默认为否，开启后，同一个企业的客户会优先添加到同一个跟进人
+	IsExclusive bool `json:"is_exclusive"`
 	// Conclusions 结束语，会话结束时自动发送给客户，可参考“结束语定义”，仅在is_temp为true时有效,https://developer.work.weixin.qq.com/document/path/92572#%E7%BB%93%E6%9D%9F%E8%AF%AD%E5%AE%9A%E4%B9%89
 	Conclusions Conclusions `json:"conclusions"`
 }
