@@ -568,3 +568,30 @@ type GetMomentTaskResult struct {
 	InvalidSendList            AddMomentTaskSenderList  `json:"invalid_sender_list"`
 	InvalidExternalContaceList AddMomentTaskContactList `json:"invalid_external_contact_list"`
 }
+
+// BehaviorDataInfo 「联系客户统计」数据
+type BehaviorDataInfo struct {
+	// StartTime 数据日期，为当日0点的时间戳
+	StartTime int64 `json:"stat_time"`
+	// ChatCnt 聊天总数， 成员有主动发送过消息的单聊总数
+	ChatCnt int64 `json:"chat_cnt"`
+	// MessageCnt 发送消息数，成员在单聊中发送的消息总数。
+	MessageCnt int64
+	// ReplyPercentage 不合法的执行者列表，包括不存在的id以及不在应用可见范围内的部门或者成员
+	ReplyPercentage float64 `json:"reply_percentage"`
+	// AvgReplyTime 已回复聊天占比，浮点型，客户主动发起聊天后，成员在一个自然日内有回复过消息的聊天数/客户主动发起的聊天数比例，不包括群聊，仅在确有聊天时返回。
+	AvgReplyTime float64 `json:"avg_reply_time"`
+	// NegativeFeedbackCnt 删除/拉黑成员的客户数，即将成员删除或加入黑名单的客户数。
+	NegativeFeedbackCnt int64 `json:"negative_feedback_cnt"`
+	// NewApplyCnt 起申请数，成员通过「搜索手机号」、「扫一扫」、「从微信好友中添加」、「从群聊中添加」、「添加共享、分配给我的客户」、「添加单向、双向删除好友关系的好友」、「从新的联系人推荐中添加」等渠道主动向客户发起的好友申请数量。
+	NewApplyCnt int64 `json:"new_apply_cnt"`
+	// NewContactCnt 新增客户数，成员新添加的客户数量。
+	NewContactCnt int64 `json:"new_contact_cnt"`
+}
+
+// GetBehaviorDataResult 获取「联系客户统计」数据
+type GetBehaviorDataResult struct {
+	Errcode      string             `json:"errcode"`
+	Errmsg       string             `json:"errmsg"`
+	BehaviorData []BehaviorDataInfo `json:"behavior_data"`
+}

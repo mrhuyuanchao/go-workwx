@@ -246,3 +246,11 @@ Name| Request Type | Response Type |Access Token|URL|Doc
 `execAddMomentTask`| `reqAddMomentTask`| `respAddMomentTask`|+|`POST /cgi-bin/externalcontact/add_moment_task`|[创建发表任务](https://developer.work.weixin.qq.com/document/path/95094)
 `execGetMomentTaskResult`|`reqGetMomentTaskResult`|`respGetMomentTaskResult`|+|`GET /cgi-bin/externalcontact/get_moment_task_result`|[获取任务创建结果](https://developer.work.weixin.qq.com/document/path/95094)
 `execCancelMomentTask`|`reqCancelMomentTask`|`respCancelMomentTask`|+|`POST /cgi-bin/externalcontact/cancel_moment_task`|[停止发表企业朋友圈](https://developer.work.weixin.qq.com/document/path/97612)
+
+# 客户联系 - 统计管理
+
+## API calls
+
+Name| Request Type | Response Type |Access Token|URL|Doc
+:---|--------------|---------------|------------|:--|:--
+`execGetUserBehaviorData`| `reqGetUserBehaviorData` | `resGetUserBehaviorData`| + | `POST /cgi-bin/externalcontact/get_user_behavior_data`| [获取「联系客户统计」数据](https://developer.work.weixin.qq.com/document/path/92132) 

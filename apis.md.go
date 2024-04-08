@@ -925,3 +925,17 @@ func (c *WorkwxApp) execUploadAttachment(req reqUploadAttachment) (respUploadAtt
 
 	return resp, nil
 }
+
+// execGetUserBehaviorData 获取「联系客户统计」数据
+func (c *WorkwxApp) execGetUserBehaviorData(req reqGetUserBehaviorData) (resGetUserBehaviorData, error) {
+	var resp resGetUserBehaviorData
+	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/get_user_behavior_data", req, &resp, true)
+	if err != nil {
+		return resGetUserBehaviorData{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return resGetUserBehaviorData{}, bizErr
+	}
+
+	return resp, nil
+}

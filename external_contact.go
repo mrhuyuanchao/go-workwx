@@ -457,3 +457,10 @@ func (c *WorkwxApp) CancelMomentTask(momentId string) error {
 	_, err := c.execCancelMomentTask(reqCancelMomentTask{MomentId: momentId})
 	return err
 }
+
+// GetUserBehaviorData 获取「联系客户统计」数据
+// https://developer.work.weixin.qq.com/document/path/92132
+func (c *WorkwxApp) GetUserBehaviorData(startTime, endTime int64, userId, paratyId []string) ([]BehaviorDataInfo, error) {
+	resp, err := c.execGetUserBehaviorData(reqGetUserBehaviorData{UserId: userId, PartyId: paratyId, StartTime: startTime, EndTime: endTime})
+	return resp.BehaviorData, err
+}

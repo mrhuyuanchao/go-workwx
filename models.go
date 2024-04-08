@@ -1412,3 +1412,21 @@ func (r respUploadAttachment) intoMediaUploadResult() (MediaUploadResult, error)
 		CreatedAt: createdAt,
 	}, nil
 }
+
+type reqGetUserBehaviorData struct {
+	UserId    []string `json:"userid"`     // 成员ID列表，最多100个
+	PartyId   []string `json:"partyid"`    // 部门ID列表，最多100个
+	StartTime int64    `json:"start_time"` // 数据起始时间
+	EndTime   int64    `json:"end_time"`   // 数据结束时间
+}
+
+var _ bodyer = reqGetUserBehaviorData{}
+
+func (x reqGetUserBehaviorData) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+type resGetUserBehaviorData struct {
+	respCommon
+	BehaviorData []BehaviorDataInfo `json:"behavior_data"`
+}
