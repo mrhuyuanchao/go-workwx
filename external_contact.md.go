@@ -576,7 +576,7 @@ type BehaviorDataInfo struct {
 	// ChatCnt 聊天总数， 成员有主动发送过消息的单聊总数
 	ChatCnt int64 `json:"chat_cnt"`
 	// MessageCnt 发送消息数，成员在单聊中发送的消息总数。
-	MessageCnt int64
+	MessageCnt int64 `json:"message_cnt"`
 	// ReplyPercentage 不合法的执行者列表，包括不存在的id以及不在应用可见范围内的部门或者成员
 	ReplyPercentage float64 `json:"reply_percentage"`
 	// AvgReplyTime 已回复聊天占比，浮点型，客户主动发起聊天后，成员在一个自然日内有回复过消息的聊天数/客户主动发起的聊天数比例，不包括群聊，仅在确有聊天时返回。
