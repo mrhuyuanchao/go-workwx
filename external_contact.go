@@ -254,7 +254,7 @@ func (c *WorkwxApp) ExternalContactListFollowUser() (*ExternalContactFollowUserL
 }
 
 // ExternalContactAddContact 配置客户联系「联系我」方式
-func (c *WorkwxApp) ExternalContactAddContact(t int, scene int, style int, remark string, skipVerify bool, state string, user []string, party []int, isTemp bool, expiresIn int, chatExpiresIn int, unionID string, conclusions Conclusions) (*ExternalContactAddContact, error) {
+func (c *WorkwxApp) ExternalContactAddContact(t int, scene int, style int, remark string, skipVerify, isExclusive bool, state string, user []string, party []int, isTemp bool, expiresIn int, chatExpiresIn int, unionID string, conclusions Conclusions) (*ExternalContactAddContact, error) {
 	resp, err := c.execAddContactExternalContact(
 		reqAddContactExternalContact{
 			ExternalContactWay{
@@ -270,6 +270,7 @@ func (c *WorkwxApp) ExternalContactAddContact(t int, scene int, style int, remar
 				ExpiresIn:     expiresIn,
 				ChatExpiresIn: chatExpiresIn,
 				UnionID:       unionID,
+				IsExclusive:   isExclusive,
 				Conclusions:   conclusions,
 			},
 		})
@@ -445,4 +446,32 @@ func (c *WorkwxApp) SendWelcomeMsg(welcomeCode string, text Text, attachments []
 		},
 	})
 	return err
+}
+
+// AddMomentTask 创建发表任务
+// https://developer.work.weixin.qq.com/document/path/95094
+func (c *WorkwxApp) AddMomentTask(task AddMomentTask) (string, error) {
+	resp, err := c.execAddMomentTask(reqAddMomentTask{task})
+	return resp.JobId, err
+}
+
+// GetMomentTaskResult 获取任务创建结果
+// https://developer.work.weixin.qq.com/document/path/95094
+func (c *WorkwxApp) GetMomentTaskResult(jobId string) (GetMomentTaskResult, error) {
+	resp, err := c.execGetMomentTaskResult(reqGetMomentTaskResult{JobId: jobId})
+	return resp.Result, err
+}
+
+// CancelMomentTask 停止发表企业朋友圈
+// https://developer.work.weixin.qq.com/document/path/97612
+func (c *WorkwxApp) CancelMomentTask(momentId string) error {
+	_, err := c.execCancelMomentTask(reqCancelMomentTask{MomentId: momentId})
+	return err
+}
+
+// GetUserBehaviorData 获取「联系客户统计」数据
+// https://developer.work.weixin.qq.com/document/path/92132
+func (c *WorkwxApp) GetUserBehaviorData(startTime, endTime int64, userId, paratyId []string) ([]BehaviorDataInfo, error) {
+	resp, err := c.execGetUserBehaviorData(reqGetUserBehaviorData{UserId: userId, PartyId: paratyId, StartTime: startTime, EndTime: endTime})
+	return resp.BehaviorData, err
 }

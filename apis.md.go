@@ -1135,3 +1135,73 @@ func (c *WorkwxApp) execKfOnEventSend(req reqMessage) (respMessageSend, error) {
 
 	return resp, nil
 }
+
+// execAddMomentTask 创建发表任务
+func (c *WorkwxApp) execAddMomentTask(req reqAddMomentTask) (respAddMomentTask, error) {
+	var resp respAddMomentTask
+	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/add_moment_task", req, &resp, true)
+	if err != nil {
+		return respAddMomentTask{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respAddMomentTask{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execGetMomentTaskResult 获取任务创建结果
+func (c *WorkwxApp) execGetMomentTaskResult(req reqGetMomentTaskResult) (respGetMomentTaskResult, error) {
+	var resp respGetMomentTaskResult
+	err := c.executeQyapiGet("/cgi-bin/externalcontact/get_moment_task_result", req, &resp, true)
+	if err != nil {
+		return respGetMomentTaskResult{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respGetMomentTaskResult{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execCancelMomentTask 停止发表企业朋友圈
+func (c *WorkwxApp) execCancelMomentTask(req reqCancelMomentTask) (respCancelMomentTask, error) {
+	var resp respCancelMomentTask
+	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/cancel_moment_task", req, &resp, true)
+	if err != nil {
+		return respCancelMomentTask{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respCancelMomentTask{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execUploadAttachment 上传附件资源
+func (c *WorkwxApp) execUploadAttachment(req reqUploadAttachment) (respUploadAttachment, error) {
+	var resp respUploadAttachment
+	err := c.executeQyapiMediaUpload("/cgi-bin/media/upload_attachment", req, &resp, true)
+	if err != nil {
+		return respUploadAttachment{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respUploadAttachment{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execGetUserBehaviorData 获取「联系客户统计」数据
+func (c *WorkwxApp) execGetUserBehaviorData(req reqGetUserBehaviorData) (resGetUserBehaviorData, error) {
+	var resp resGetUserBehaviorData
+	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/get_user_behavior_data", req, &resp, true)
+	if err != nil {
+		return resGetUserBehaviorData{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return resGetUserBehaviorData{}, bizErr
+	}
+
+	return resp, nil
+}

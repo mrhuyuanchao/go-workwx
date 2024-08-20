@@ -2,6 +2,7 @@ package workwx
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/url"
 	"strconv"
 	"strings"
@@ -1972,4 +1973,106 @@ func (x reqOASetOneUserVacationQuota) intoBody() ([]byte, error) {
 // respOASetOneUserVacationQuota 修改成员假期余额 响应
 type respOASetOneUserVacationQuota struct {
 	respCommon
+}
+
+type reqAddMomentTask struct {
+	AddMomentTask
+}
+
+var _ bodyer = reqAddMomentTask{}
+
+func (x reqAddMomentTask) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x.AddMomentTask)
+}
+
+type respAddMomentTask struct {
+	respCommon
+	JobId string `json:"jobid"`
+}
+
+type reqGetMomentTaskResult struct {
+	JobId string
+}
+
+var _ urlValuer = reqGetMomentTaskResult{}
+
+func (x reqGetMomentTaskResult) intoURLValues() url.Values {
+	return url.Values{
+		"jobid": {x.JobId},
+	}
+}
+
+type respGetMomentTaskResult struct {
+	respCommon
+	Status int                 `json:"status"`
+	Type   string              `json:"type"`
+	Result GetMomentTaskResult `json:"result"`
+}
+
+type reqCancelMomentTask struct {
+	MomentId string `json:"moment_id"`
+}
+
+var _ bodyer = reqCancelMomentTask{}
+
+func (x reqCancelMomentTask) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+type respCancelMomentTask struct {
+	respCommon
+}
+
+type reqUploadAttachment struct {
+	MediaType      string `json:"media_type"`
+	AttachmentType int    `json:"attachment_type"`
+	Media          *Media
+}
+
+var _ urlValuer = reqUploadAttachment{}
+var _ mediaUploader = reqUploadAttachment{}
+
+func (x reqUploadAttachment) intoURLValues() url.Values {
+	return url.Values{
+		"media_type":      {x.MediaType},
+		"attachment_type": {fmt.Sprintf("%d", x.AttachmentType)},
+	}
+}
+
+func (x reqUploadAttachment) getMedia() *Media {
+	return x.Media
+}
+
+type respUploadAttachment struct {
+	respCommon
+	Type      string `json:"type"`
+	MediaID   string `json:"media_id"`
+	CreatedAt int64  `json:"created_at"`
+}
+
+func (r respUploadAttachment) intoMediaUploadResult() (MediaUploadResult, error) {
+	createdAt := time.Unix(r.CreatedAt, 0)
+	return MediaUploadResult{
+		Type:      r.Type,
+		MediaID:   r.MediaID,
+		CreatedAt: createdAt,
+	}, nil
+}
+
+type reqGetUserBehaviorData struct {
+	UserId    []string `json:"userid"`     // 成员ID列表，最多100个
+	PartyId   []string `json:"partyid"`    // 部门ID列表，最多100个
+	StartTime int64    `json:"start_time"` // 数据起始时间
+	EndTime   int64    `json:"end_time"`   // 数据结束时间
+}
+
+var _ bodyer = reqGetUserBehaviorData{}
+
+func (x reqGetUserBehaviorData) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+type resGetUserBehaviorData struct {
+	respCommon
+	BehaviorData []BehaviorDataInfo `json:"behavior_data"`
 }

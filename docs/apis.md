@@ -8,7 +8,6 @@ Name|Request Type|Response Type|Access Token|URL|Doc
 `execGetJSAPITicket`|`reqJSAPITicket`|`respJSAPITicket`|+|`GET /cgi-bin/get_jsapi_ticket`|[获取企业的jsapi_ticket](https://open.work.weixin.qq.com/api/doc/90000/90136/90506)
 `execGetJSAPITicketAgentConfig`|`reqJSAPITicketAgentConfig`|`respJSAPITicket`|+|`GET /cgi-bin/ticket/get`|[获取应用的jsapi_ticket](https://open.work.weixin.qq.com/api/doc/90000/90136/90506)
 `execJSCode2Session`|`reqJSCode2Session`|`respJSCode2Session`|+|`GET /cgi-bin/miniprogram/jscode2session`|[临时登录凭证校验code2Session](https://open.work.weixin.qq.com/api/doc/90000/90136/91507)
-`execAuthCode2UserInfo`|`reqAuthCode2UserInfo`|`respAuthCode2UserInfo`|+|`GET /cgi-bin/auth/getuserinfo`|[获取访问用户身份](https://developer.work.weixin.qq.com/document/path/91023)
 
 # 成员管理
 
@@ -241,6 +240,25 @@ Name|Request Type|Response Type|Access Token|URL|Doc
 :---|------------|-------------|------------|:--|:--
 `execAddMsgTemplate`|`reqAddMsgTemplateExternalContact`|`respAddMsgTemplateExternalContact`|+|`POST /cgi-bin/externalcontact/add_msg_template`|[创建企业群发](https://developer.work.weixin.qq.com/document/path/92135)
 `execSendWelcomeMsg`|`reqSendWelcomeMsgExternalContact`|`respSendWelcomeMsgExternalContact`|+|`POST /cgi-bin/externalcontact/send_welcome_msg`|[发送新客户欢迎语](https://developer.work.weixin.qq.com/document/path/92137)
+
+
+# 客户联系 - 客户朋友圈
+
+## API calls
+
+Name| Request Type | Response Type |Access Token|URL|Doc
+:---|--------------|---------------|------------|:--|:--
+`execAddMomentTask`| `reqAddMomentTask`| `respAddMomentTask`|+|`POST /cgi-bin/externalcontact/add_moment_task`|[创建发表任务](https://developer.work.weixin.qq.com/document/path/95094)
+`execGetMomentTaskResult`|`reqGetMomentTaskResult`|`respGetMomentTaskResult`|+|`GET /cgi-bin/externalcontact/get_moment_task_result`|[获取任务创建结果](https://developer.work.weixin.qq.com/document/path/95094)
+`execCancelMomentTask`|`reqCancelMomentTask`|`respCancelMomentTask`|+|`POST /cgi-bin/externalcontact/cancel_moment_task`|[停止发表企业朋友圈](https://developer.work.weixin.qq.com/document/path/97612)
+
+# 客户联系 - 统计管理
+
+## API calls
+
+Name| Request Type | Response Type |Access Token|URL|Doc
+:---|--------------|---------------|------------|:--|:--
+`execGetUserBehaviorData`| `reqGetUserBehaviorData` | `resGetUserBehaviorData`| + | `POST /cgi-bin/externalcontact/get_user_behavior_data`| [获取「联系客户统计」数据](https://developer.work.weixin.qq.com/document/path/92132) 
 
 
 # 微信客服 - 客服账号管理

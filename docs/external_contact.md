@@ -250,6 +250,7 @@ Name|JSON|Type|Doc
 `ExpiresIn`|`expires_in`|`int`| 临时会话二维码有效期，以秒为单位。该参数仅在is_temp为true时有效，默认7天，最多为14天
 `ChatExpiresIn`|`chat_expires_in`|`int`| 临时会话有效期，以秒为单位。该参数仅在is_temp为true时有效，默认为添加好友后24小时，最多为14天
 `UnionID`|`unionid`|`string`| 可进行临时会话的客户UnionID，该参数仅在is_temp为true时有效，如不指定则不进行限制
+`IsExclusive`|`is_exclusive`|`bool`| 是否开启同一外部企业客户只能添加同一个员工，默认为否，开启后，同一个企业的客户会优先添加到同一个跟进人
 `Conclusions`|`conclusions`|`Conclusions`| 结束语，会话结束时自动发送给客户，可参考“结束语定义”，仅在is_temp为true时有效,<https://developer.work.weixin.qq.com/document/path/92572#%E7%BB%93%E6%9D%9F%E8%AF%AD%E5%AE%9A%E4%B9%89>
 
 ### `ExternalGroupChatJoinWay` 配置客户群「加入群聊」方式
@@ -414,3 +415,73 @@ Name|JSON|Type|Doc
 `Order`|`order,omitempty`|`uint32`| 标签组排序的次序值，order值大的排序靠前。有效的值范围是[0, 2^32)
 `Tag`|`tag,omitempty`|`[]ExternalContactAddCorpTag`| 标签组内的标签列表
 `AgentID`|`agentid,omitempty`|`int64`| 授权方安装的应用agentid。仅旧的第三方多应用套件需要填此参数
+
+
+### `AddMomentTaskSenderList` 客户朋友圈发表任务的执行者列表
+
+Name|JSON|Type|Doc
+:---|:---|:---|:--
+`UserList`|`user_list`|`[]string`| 发表任务的执行者用户列表，最多支持10万个
+`DepartmentList`|`department_list`|`[]int64`| 发表任务的执行者部门列表
+
+### `AddMomentTaskContactList` 可见到该朋友圈的客户列表
+
+Name|JSON|Type|Doc
+:---|:---|:---|:--
+`TagList`|`tag_list`|`[]string`| 可见到该朋友圈的客户标签列表。注：这里仅支持企业客户标签，不支持规则组标签
+
+### `AddMomentTaskVisibleRange` 指定的发表范围；若未指定，则表示执行者为应用可见范围内所有成员
+
+Name|JSON|Type|Doc
+:---|:---|:---|:--
+`SenderList`|`sender_list`|`AddMomentTaskSenderList`| 发表任务的执行者列表
+`ExternalContactList`|`external_contact_list`|`AddMomentTaskContactList`| 可见到该朋友圈的客户列表
+
+### `MomentTaskAttachments` 附件
+
+Name|JSON|Type|Doc
+:---|:---|:---|:--
+`MsgType`|`msgtype`|`AttachmentMsgType`| 附件类型，可选image、link或者video
+`Image`|`image`|`Image`| 图片消息配置
+`Link`|`link`|`Link`| 图文消息配置
+`Video`|`video`|`Video`| 视频消息配置
+
+### `AddMomentTask` 企业发表内容到客户的朋友圈
+
+Name|JSON|Type|Doc
+:---|:---|:---|:--
+`Text`|`text`|`Text`| 文本消息
+`Attachments`|`attachments`|`[]MomentTaskAttachments`| 附件，不能与text.content同时为空，最多支持9个图片类型，或者1个视频，或者1个链接。类型只能三选一，若传了不同类型，报错'invalid attachments msgtype'
+`VisibleRange`|`visible_range`|`AddMomentTaskVisibleRange`| 指定的发表范围；若未指定，则表示执行者为应用可见范围内所有成员
+
+### `GetMomentTaskResult` 获取任务创建结果
+
+Name|JSON|Type|Doc
+:---|:---|:---|:--
+`Errcode`|`errcode`|`string`|
+`Errmsg`|`errmsg`|`string`
+`MomentId`|`moment_id|`string`| 朋友圈id
+`InvalidSendList`|`invalid_sender_list`|`AddMomentTaskSenderList`| 不合法的执行者列表，包括不存在的id以及不在应用可见范围内的部门或者成员
+`InvalidExternalContaceList`|`invalid_external_contact_list`|`AddMomentTaskContactList`|
+
+### `BehaviorDataInfo` 「联系客户统计」数据
+
+Name|JSON| Type                       |Doc
+:---|:---|:---------------------------|:--
+`StartTime`|`stat_time`| `int64`                    | 数据日期，为当日0点的时间戳
+`ChatCnt`|`chat_cnt`| `int64`                    | 聊天总数， 成员有主动发送过消息的单聊总数
+`MessageCnt`|`message_cnt`| `int64`                    | 发送消息数，成员在单聊中发送的消息总数。
+`ReplyPercentage`|`reply_percentage`| `float64`                  | 不合法的执行者列表，包括不存在的id以及不在应用可见范围内的部门或者成员
+`AvgReplyTime`|`avg_reply_time`| `float64` | 已回复聊天占比，浮点型，客户主动发起聊天后，成员在一个自然日内有回复过消息的聊天数/客户主动发起的聊天数比例，不包括群聊，仅在确有聊天时返回。
+`NegativeFeedbackCnt`| `negative_feedback_cnt`| `int64`| 删除/拉黑成员的客户数，即将成员删除或加入黑名单的客户数。
+`NewApplyCnt`|`new_apply_cnt`| `int64`|起申请数，成员通过「搜索手机号」、「扫一扫」、「从微信好友中添加」、「从群聊中添加」、「添加共享、分配给我的客户」、「添加单向、双向删除好友关系的好友」、「从新的联系人推荐中添加」等渠道主动向客户发起的好友申请数量。
+`NewContactCnt`|`new_contact_cnt`|`int64`| 新增客户数，成员新添加的客户数量。
+
+### `GetBehaviorDataResult` 获取「联系客户统计」数据
+
+Name|JSON| Type             |Doc
+:---|:---|:-----------------|:--
+`Errcode`|`errcode`| `string`         |
+`Errmsg`|`errmsg`| `string`         |
+`BehaviorData`|`behavior_data`| `[]BehaviorDataInfo` |
+

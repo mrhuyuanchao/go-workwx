@@ -131,3 +131,24 @@ func (c *WorkwxApp) UploadPermanentImageMedia(media *Media) (url string, err err
 
 	return url, nil
 }
+
+// UploadAttachment 上传附件资源
+// mediaType:媒体文件类型，分别有图片（image）、视频（video）、普通文件（file）
+// attachmentType: 附件类型，不同的附件类型用于不同的场景。1：朋友圈；2:商品图册
+func (c *WorkwxApp) UploadAttachment(mediaType string, attachmentType int, media *Media) (*MediaUploadResult, error) {
+	resp, err := c.execUploadAttachment(reqUploadAttachment{
+		MediaType:      mediaType,
+		AttachmentType: attachmentType,
+		Media:          media,
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	obj, err := resp.intoMediaUploadResult()
+	if err != nil {
+		return nil, err
+	}
+
+	return &obj, nil
+}
