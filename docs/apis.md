@@ -260,6 +260,13 @@ Name| Request Type | Response Type |Access Token|URL|Doc
 :---|--------------|---------------|------------|:--|:--
 `execGetUserBehaviorData`| `reqGetUserBehaviorData` | `resGetUserBehaviorData`| + | `POST /cgi-bin/externalcontact/get_user_behavior_data`| [获取「联系客户统计」数据](https://developer.work.weixin.qq.com/document/path/92132) 
 
+# 客户联系 - 上传附件资源
+
+## API calls
+
+Name| Request Type | Response Type |Access Token| URL                                                           |Doc
+:---|--------------|---------------|------------|:--------------------------------------------------------------|:--
+`execUploadAttachment`| `reqUploadAttachment` | `respUploadAttachment`| + | `POST(media) /cgi-bin/media/upload_attachment` | [上传附件资源](https://developer.work.weixin.qq.com/document/path/96347)
 
 # 微信客服 - 客服账号管理
 
@@ -294,3 +301,28 @@ Name|Request Type|Response Type|Access Token|URL|Doc
 `execKfSyncMsg`|`reqKfSyncMsg`|`respKfSyncMsg`|+|`POST /cgi-bin/kf/sync_msg`|[读取消息](https://developer.work.weixin.qq.com/document/path/94670)
 `execKfSend`|`reqMessage`|`respMessageSend`|+|`POST /cgi-bin/kf/send_msg`|[发送消息](https://developer.work.weixin.qq.com/document/path/94677)
 `execKfOnEventSend`|`reqMessage`|`respMessageSend`|+|`POST /cgi-bin/kf/send_msg_on_event`|[发送欢迎语等事件响应消息](https://developer.work.weixin.qq.com/document/path/95122)
+
+# 家校沟通 - 获取访问用户身份
+
+## API calls
+
+Name|Request Type|Response Type|Access Token| URL                             |Doc
+:---|------------|-------------|------------|:--------------------------------|:--
+`execAuthCode2UserInfo`|`reqAuthCode2UserInfo`|`respAuthCode2UserInfo`|+| `GET /cgi-bin/auth/getuserinfo` |[获取访问用户身份](https://developer.work.weixin.qq.com/document/path/96712)
+
+# 数据与智能专区 - 应用同步调用专区程序
+
+## API calls
+
+Name|Request Type|Response Type|Access Token|URL|Doc
+:---|------------|-------------|------------|:--|:--
+`execChatDataSyncCallProgram`|`reqChatDataSyncCallProgram`|`respChatDataSyncCallProgram`|+|`POST /cgi-bin/chatdata/sync_call_program`|[应用同步调用专区程序](https://developer.work.weixin.qq.com/document/path/99965)
+
+# 数据与智能专区 - 应用同步调用专区程序
+
+## API calls
+
+Name|Request Type|Response Type|Access Token|URL|Doc
+:---|------------|-------------|------------|:--|:--
+`execChatDataAsyncProgramTask`|`reqChatDataAsyncProgramTask`|`respChatDataAsyncProgramTask`|+|`POST /cgi-bin/chatdata/async_program_task`|[应用异步调用专区程序](https://developer.work.weixin.qq.com/document/path/99966)
+`execChatDataAsyncProgramResult`| `reqChatDataAsyncProgramResult` | `respChatDataAsyncProgramResult` |+| `POST /cgi-bin/chatdata/async_program_result` |[应用异步调用专区程序](https://developer.work.weixin.qq.com/document/path/99966)

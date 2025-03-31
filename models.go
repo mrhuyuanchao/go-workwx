@@ -2076,3 +2076,62 @@ type resGetUserBehaviorData struct {
 	respCommon
 	BehaviorData []BehaviorDataInfo `json:"behavior_data"`
 }
+
+// reqKfSyncMsg 同步调用专区程序
+type reqChatDataSyncCallProgram struct {
+	ProgramId   string `json:"program_id"`
+	AbilityId   string `json:"ability_id"`
+	NotifyId    string `json:"notify_id"`
+	RequestData string `json:"request_data"`
+}
+
+var _ bodyer = reqChatDataSyncCallProgram{}
+
+func (x reqChatDataSyncCallProgram) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+// respKfSyncMsg 同步调用专区程序 响应
+type respChatDataSyncCallProgram struct {
+	respCommon
+
+	ResponseData string `json:"response_data"`
+}
+
+// reqKfSyncMsg 异步调用专区程序
+type reqChatDataAsyncProgramTask struct {
+	ProgramId   string `json:"program_id"`
+	AbilityId   string `json:"ability_id"`
+	RequestData string `json:"request_data"`
+}
+
+var _ bodyer = reqChatDataAsyncProgramTask{}
+
+func (x reqChatDataAsyncProgramTask) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+// respKfSyncMsg 同步调用专区程序 响应
+type respChatDataAsyncProgramTask struct {
+	respCommon
+
+	JobId string `json:"jobid"`
+}
+
+// reqKfSyncMsg 获取专区程序任务结果
+type reqChatDataAsyncProgramResult struct {
+	JobId string `json:"jobid"`
+}
+
+var _ bodyer = reqChatDataAsyncProgramResult{}
+
+func (x reqChatDataAsyncProgramResult) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+// respKfSyncMsg 同步调用专区程序 响应
+type respChatDataAsyncProgramResult struct {
+	respCommon
+
+	AsyncProgramResult
+}

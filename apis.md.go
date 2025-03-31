@@ -58,20 +58,6 @@ func (c *WorkwxApp) execJSCode2Session(req reqJSCode2Session) (respJSCode2Sessio
 	return resp, nil
 }
 
-// execAuthCode2UserInfo 获取访问用户身份
-func (c *WorkwxApp) execAuthCode2UserInfo(req reqAuthCode2UserInfo) (respAuthCode2UserInfo, error) {
-	var resp respAuthCode2UserInfo
-	err := c.executeQyapiGet("/cgi-bin/auth/getuserinfo", req, &resp, true)
-	if err != nil {
-		return respAuthCode2UserInfo{}, err
-	}
-	if bizErr := resp.TryIntoErr(); bizErr != nil {
-		return respAuthCode2UserInfo{}, bizErr
-	}
-
-	return resp, nil
-}
-
 // execUserGet 读取成员
 func (c *WorkwxApp) execUserGet(req reqUserGet) (respUserGet, error) {
 	var resp respUserGet
@@ -954,6 +940,76 @@ func (c *WorkwxApp) execSendWelcomeMsg(req reqSendWelcomeMsgExternalContact) (re
 	return resp, nil
 }
 
+// execAddMomentTask 创建发表任务
+func (c *WorkwxApp) execAddMomentTask(req reqAddMomentTask) (respAddMomentTask, error) {
+	var resp respAddMomentTask
+	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/add_moment_task", req, &resp, true)
+	if err != nil {
+		return respAddMomentTask{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respAddMomentTask{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execGetMomentTaskResult 获取任务创建结果
+func (c *WorkwxApp) execGetMomentTaskResult(req reqGetMomentTaskResult) (respGetMomentTaskResult, error) {
+	var resp respGetMomentTaskResult
+	err := c.executeQyapiGet("/cgi-bin/externalcontact/get_moment_task_result", req, &resp, true)
+	if err != nil {
+		return respGetMomentTaskResult{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respGetMomentTaskResult{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execCancelMomentTask 停止发表企业朋友圈
+func (c *WorkwxApp) execCancelMomentTask(req reqCancelMomentTask) (respCancelMomentTask, error) {
+	var resp respCancelMomentTask
+	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/cancel_moment_task", req, &resp, true)
+	if err != nil {
+		return respCancelMomentTask{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respCancelMomentTask{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execGetUserBehaviorData 获取「联系客户统计」数据
+func (c *WorkwxApp) execGetUserBehaviorData(req reqGetUserBehaviorData) (resGetUserBehaviorData, error) {
+	var resp resGetUserBehaviorData
+	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/get_user_behavior_data", req, &resp, true)
+	if err != nil {
+		return resGetUserBehaviorData{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return resGetUserBehaviorData{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execUploadAttachment 上传附件资源
+func (c *WorkwxApp) execUploadAttachment(req reqUploadAttachment) (respUploadAttachment, error) {
+	var resp respUploadAttachment
+	err := c.executeQyapiMediaUpload("/cgi-bin/media/upload_attachment", req, &resp, true)
+	if err != nil {
+		return respUploadAttachment{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respUploadAttachment{}, bizErr
+	}
+
+	return resp, nil
+}
+
 // execKfAccountCreate 添加客服账号
 func (c *WorkwxApp) execKfAccountCreate(req reqKfAccountCreate) (respKfAccountCreate, error) {
 	var resp respKfAccountCreate
@@ -1136,71 +1192,57 @@ func (c *WorkwxApp) execKfOnEventSend(req reqMessage) (respMessageSend, error) {
 	return resp, nil
 }
 
-// execAddMomentTask 创建发表任务
-func (c *WorkwxApp) execAddMomentTask(req reqAddMomentTask) (respAddMomentTask, error) {
-	var resp respAddMomentTask
-	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/add_moment_task", req, &resp, true)
+// execAuthCode2UserInfo 获取访问用户身份
+func (c *WorkwxApp) execAuthCode2UserInfo(req reqAuthCode2UserInfo) (respAuthCode2UserInfo, error) {
+	var resp respAuthCode2UserInfo
+	err := c.executeQyapiGet("/cgi-bin/auth/getuserinfo", req, &resp, true)
 	if err != nil {
-		return respAddMomentTask{}, err
+		return respAuthCode2UserInfo{}, err
 	}
 	if bizErr := resp.TryIntoErr(); bizErr != nil {
-		return respAddMomentTask{}, bizErr
+		return respAuthCode2UserInfo{}, bizErr
 	}
 
 	return resp, nil
 }
 
-// execGetMomentTaskResult 获取任务创建结果
-func (c *WorkwxApp) execGetMomentTaskResult(req reqGetMomentTaskResult) (respGetMomentTaskResult, error) {
-	var resp respGetMomentTaskResult
-	err := c.executeQyapiGet("/cgi-bin/externalcontact/get_moment_task_result", req, &resp, true)
+// execChatDataSyncCallProgram 应用同步调用专区程序
+func (c *WorkwxApp) execChatDataSyncCallProgram(req reqChatDataSyncCallProgram) (respChatDataSyncCallProgram, error) {
+	var resp respChatDataSyncCallProgram
+	err := c.executeQyapiJSONPost("/cgi-bin/chatdata/sync_call_program", req, &resp, true)
 	if err != nil {
-		return respGetMomentTaskResult{}, err
+		return respChatDataSyncCallProgram{}, err
 	}
 	if bizErr := resp.TryIntoErr(); bizErr != nil {
-		return respGetMomentTaskResult{}, bizErr
+		return respChatDataSyncCallProgram{}, bizErr
 	}
 
 	return resp, nil
 }
 
-// execCancelMomentTask 停止发表企业朋友圈
-func (c *WorkwxApp) execCancelMomentTask(req reqCancelMomentTask) (respCancelMomentTask, error) {
-	var resp respCancelMomentTask
-	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/cancel_moment_task", req, &resp, true)
+// execChatDataAsyncProgramTask 应用异步调用专区程序
+func (c *WorkwxApp) execChatDataAsyncProgramTask(req reqChatDataAsyncProgramTask) (respChatDataAsyncProgramTask, error) {
+	var resp respChatDataAsyncProgramTask
+	err := c.executeQyapiJSONPost("/cgi-bin/chatdata/async_program_task", req, &resp, true)
 	if err != nil {
-		return respCancelMomentTask{}, err
+		return respChatDataAsyncProgramTask{}, err
 	}
 	if bizErr := resp.TryIntoErr(); bizErr != nil {
-		return respCancelMomentTask{}, bizErr
+		return respChatDataAsyncProgramTask{}, bizErr
 	}
 
 	return resp, nil
 }
 
-// execUploadAttachment 上传附件资源
-func (c *WorkwxApp) execUploadAttachment(req reqUploadAttachment) (respUploadAttachment, error) {
-	var resp respUploadAttachment
-	err := c.executeQyapiMediaUpload("/cgi-bin/media/upload_attachment", req, &resp, true)
+// execChatDataAsyncProgramResult 应用异步调用专区程序
+func (c *WorkwxApp) execChatDataAsyncProgramResult(req reqChatDataAsyncProgramResult) (respChatDataAsyncProgramResult, error) {
+	var resp respChatDataAsyncProgramResult
+	err := c.executeQyapiJSONPost("/cgi-bin/chatdata/async_program_result", req, &resp, true)
 	if err != nil {
-		return respUploadAttachment{}, err
+		return respChatDataAsyncProgramResult{}, err
 	}
 	if bizErr := resp.TryIntoErr(); bizErr != nil {
-		return respUploadAttachment{}, bizErr
-	}
-
-	return resp, nil
-}
-
-// execGetUserBehaviorData 获取「联系客户统计」数据
-func (c *WorkwxApp) execGetUserBehaviorData(req reqGetUserBehaviorData) (resGetUserBehaviorData, error) {
-	var resp resGetUserBehaviorData
-	err := c.executeQyapiJSONPost("/cgi-bin/externalcontact/get_user_behavior_data", req, &resp, true)
-	if err != nil {
-		return resGetUserBehaviorData{}, err
-	}
-	if bizErr := resp.TryIntoErr(); bizErr != nil {
-		return resGetUserBehaviorData{}, bizErr
+		return respChatDataAsyncProgramResult{}, bizErr
 	}
 
 	return resp, nil
