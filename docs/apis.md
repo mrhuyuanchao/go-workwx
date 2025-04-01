@@ -310,19 +310,29 @@ Name|Request Type|Response Type|Access Token| URL                             |D
 :---|------------|-------------|------------|:--------------------------------|:--
 `execAuthCode2UserInfo`|`reqAuthCode2UserInfo`|`respAuthCode2UserInfo`|+| `GET /cgi-bin/auth/getuserinfo` |[获取访问用户身份](https://developer.work.weixin.qq.com/document/path/96712)
 
-# 数据与智能专区 - 应用同步调用专区程序
+# 数据与智能专区 - 基础接口
+
+## API calls
+Name|Request Type|Response Type|Access Token|URL|Doc
+:---|------------|-------------|------------|:--|:--
+`execChatDataSetReceiveCallback`|`reqChatDataSetReceiveCallback`|`respChatDataSetReceiveCallback`|+|`POST /cgi-bin/chatdata/set_receive_callback`|[设置专区接收回调事件](https://developer.work.weixin.qq.com/document/path/100018)
+
+# 数据与智能专区 - 应用调用专区程序
 
 ## API calls
 
 Name|Request Type|Response Type|Access Token|URL|Doc
 :---|------------|-------------|------------|:--|:--
 `execChatDataSyncCallProgram`|`reqChatDataSyncCallProgram`|`respChatDataSyncCallProgram`|+|`POST /cgi-bin/chatdata/sync_call_program`|[应用同步调用专区程序](https://developer.work.weixin.qq.com/document/path/99965)
-
-# 数据与智能专区 - 应用同步调用专区程序
-
-## API calls
-
-Name|Request Type|Response Type|Access Token|URL|Doc
-:---|------------|-------------|------------|:--|:--
 `execChatDataAsyncProgramTask`|`reqChatDataAsyncProgramTask`|`respChatDataAsyncProgramTask`|+|`POST /cgi-bin/chatdata/async_program_task`|[应用异步调用专区程序](https://developer.work.weixin.qq.com/document/path/99966)
 `execChatDataAsyncProgramResult`| `reqChatDataAsyncProgramResult` | `respChatDataAsyncProgramResult` |+| `POST /cgi-bin/chatdata/async_program_result` |[应用异步调用专区程序](https://developer.work.weixin.qq.com/document/path/99966)
+
+# 数据与智能专区 - 专区调试模式
+
+## API calls
+Name| Request Type                | Response Type                |Access Token|URL|Doc
+:---|-----------------------------|------------------------------|------------|:--|:--
+`execChatDataOpenDebugMode`| `reqChatDataOpenDebugMode`  | `respChatDataOpenDebugMode`  |+|`POST /cgi-bin/chatdata/open_debug_mode`|[开启专区调试模式](https://developer.work.weixin.qq.com/document/path/100091)
+`execChatDataCloseDebugMode`| `reqChatDataCloseDebugMode` | `respChatDataCloseDebugMode` |+|`POST /cgi-bin/chatdata/close_debug_mode`|[关闭专区调试模式](https://developer.work.weixin.qq.com/document/path/100092)
+`execChatDataCheckDebugMode`| `reqChatDataCheckDebugMode` | `respChatDataCheckDebugMode` |+|`POST /cgi-bin/chatdata/check_debug_mode`|[获取专区调试模式状态](https://developer.work.weixin.qq.com/document/path/100114)
+

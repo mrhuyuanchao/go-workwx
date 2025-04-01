@@ -1,5 +1,13 @@
 package workwx
 
+// ChatDataSetReceiveCallback 设置专区接收回调事件
+func (c *WorkwxApp) ChatDataSetReceiveCallback(programId string, callbackUrl string, token string, encodingAESKey string) error {
+	_, err := c.execChatDataSetReceiveCallback(reqChatDataSetReceiveCallback{
+		ProgramId: programId,
+	})
+	return err
+}
+
 // ChatDataSyncCallProgram 应用同步调用专区程序
 func (c *WorkwxApp) ChatDataSyncCallProgram(programId string, abilityId string, notifyId string, requestData string) (responseData string, err error) {
 	resp, err := c.execChatDataSyncCallProgram(reqChatDataSyncCallProgram{
@@ -36,4 +44,31 @@ func (c *WorkwxApp) ChatDataAsyncProgramResult(jobId string) (result *AsyncProgr
 		return nil, err
 	}
 	return &resp.AsyncProgramResult, nil
+}
+
+// ChatDataOpenDebugMode 开启专区调试模式
+func (c *WorkwxApp) ChatDataOpenDebugMode(programId string) error {
+	_, err := c.execChatDataOpenDebugMode(reqChatDataOpenDebugMode{
+		ProgramId: programId,
+	})
+	return err
+}
+
+// ChatDataCloseDebugMode 关闭专区调试模式
+func (c *WorkwxApp) ChatDataCloseDebugMode(programId string) error {
+	_, err := c.execChatDataCloseDebugMode(reqChatDataCloseDebugMode{
+		ProgramId: programId,
+	})
+	return err
+}
+
+// ChatDataCheckDebugMode 获取专区调试模式状态
+func (c *WorkwxApp) ChatDataCheckDebugMode(programId string) (isDebugMode DebugModeStatusType, err error) {
+	resp, err := c.execChatDataCheckDebugMode(reqChatDataCheckDebugMode{
+		ProgramId: programId,
+	})
+	if err != nil {
+		return 0, err
+	}
+	return resp.DebugModeStatus, nil
 }

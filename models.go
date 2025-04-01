@@ -2111,7 +2111,7 @@ func (x reqChatDataAsyncProgramTask) intoBody() ([]byte, error) {
 	return marshalIntoJSONBody(x)
 }
 
-// respKfSyncMsg 同步调用专区程序 响应
+// respKfSyncMsg 异步调用专区程序 响应
 type respChatDataAsyncProgramTask struct {
 	respCommon
 
@@ -2129,9 +2129,76 @@ func (x reqChatDataAsyncProgramResult) intoBody() ([]byte, error) {
 	return marshalIntoJSONBody(x)
 }
 
-// respKfSyncMsg 同步调用专区程序 响应
+// respKfSyncMsg 获取专区程序任务结果 响应
 type respChatDataAsyncProgramResult struct {
 	respCommon
 
 	AsyncProgramResult
+}
+
+// reqChatDataSetReceiveCallback 设置专区接收回调事件
+type reqChatDataSetReceiveCallback struct {
+	ProgramId string `json:"program_id"` // 专区ID
+}
+
+var _ bodyer = reqChatDataSetReceiveCallback{}
+
+func (x reqChatDataSetReceiveCallback) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+// respChatDataSetReceiveCallback 设置专区接收回调事件 响应
+type respChatDataSetReceiveCallback struct {
+	respCommon
+}
+
+// reqChatDataOpenDebugMode 开启专区调试模式
+type reqChatDataOpenDebugMode struct {
+	ProgramId  string `json:"program_id"`  // 专区ID
+	DebugToken string `json:"debug_token"` // 程序的调试凭证
+}
+
+var _ bodyer = reqChatDataOpenDebugMode{}
+
+func (x reqChatDataOpenDebugMode) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+// respChatDataOpenDebugMode 开启专区调试模式 响应
+type respChatDataOpenDebugMode struct {
+	respCommon
+}
+
+// reqChatDataCloseDebugMode 关闭专区调试模式
+type reqChatDataCloseDebugMode struct {
+	ProgramId string `json:"program_id"` // 专区ID
+}
+
+var _ bodyer = reqChatDataCloseDebugMode{}
+
+func (x reqChatDataCloseDebugMode) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+// respChatDataCloseDebugMode 关闭专区调试模式 响应
+type respChatDataCloseDebugMode struct {
+	respCommon
+}
+
+// reqChatDataCheckDebugMode 获取专区调试模式状态
+type reqChatDataCheckDebugMode struct {
+	ProgramId string `json:"program_id"` // 专区ID
+}
+
+var _ bodyer = reqChatDataCheckDebugMode{}
+
+func (x reqChatDataCheckDebugMode) intoBody() ([]byte, error) {
+	return marshalIntoJSONBody(x)
+}
+
+// respChatDataCheckDebugMode 获取专区调试模式状态 响应
+type respChatDataCheckDebugMode struct {
+	respCommon
+
+	DebugModeStatus DebugModeStatusType `json:"debug_mode_status"` // 程序当前的调试模式状态，1为关闭，2为开启
 }

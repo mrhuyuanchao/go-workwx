@@ -1206,6 +1206,20 @@ func (c *WorkwxApp) execAuthCode2UserInfo(req reqAuthCode2UserInfo) (respAuthCod
 	return resp, nil
 }
 
+// execChatDataSetReceiveCallback 设置专区接收回调事件
+func (c *WorkwxApp) execChatDataSetReceiveCallback(req reqChatDataSetReceiveCallback) (respChatDataSetReceiveCallback, error) {
+	var resp respChatDataSetReceiveCallback
+	err := c.executeQyapiJSONPost("/cgi-bin/chatdata/set_receive_callback", req, &resp, true)
+	if err != nil {
+		return respChatDataSetReceiveCallback{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respChatDataSetReceiveCallback{}, bizErr
+	}
+
+	return resp, nil
+}
+
 // execChatDataSyncCallProgram 应用同步调用专区程序
 func (c *WorkwxApp) execChatDataSyncCallProgram(req reqChatDataSyncCallProgram) (respChatDataSyncCallProgram, error) {
 	var resp respChatDataSyncCallProgram
@@ -1243,6 +1257,48 @@ func (c *WorkwxApp) execChatDataAsyncProgramResult(req reqChatDataAsyncProgramRe
 	}
 	if bizErr := resp.TryIntoErr(); bizErr != nil {
 		return respChatDataAsyncProgramResult{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execChatDataOpenDebugMode 开启专区调试模式
+func (c *WorkwxApp) execChatDataOpenDebugMode(req reqChatDataOpenDebugMode) (respChatDataOpenDebugMode, error) {
+	var resp respChatDataOpenDebugMode
+	err := c.executeQyapiJSONPost("/cgi-bin/chatdata/open_debug_mode", req, &resp, true)
+	if err != nil {
+		return respChatDataOpenDebugMode{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respChatDataOpenDebugMode{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execChatDataCloseDebugMode 关闭专区调试模式
+func (c *WorkwxApp) execChatDataCloseDebugMode(req reqChatDataCloseDebugMode) (respChatDataCloseDebugMode, error) {
+	var resp respChatDataCloseDebugMode
+	err := c.executeQyapiJSONPost("/cgi-bin/chatdata/close_debug_mode", req, &resp, true)
+	if err != nil {
+		return respChatDataCloseDebugMode{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respChatDataCloseDebugMode{}, bizErr
+	}
+
+	return resp, nil
+}
+
+// execChatDataCheckDebugMode 获取专区调试模式状态
+func (c *WorkwxApp) execChatDataCheckDebugMode(req reqChatDataCheckDebugMode) (respChatDataCheckDebugMode, error) {
+	var resp respChatDataCheckDebugMode
+	err := c.executeQyapiJSONPost("/cgi-bin/chatdata/check_debug_mode", req, &resp, true)
+	if err != nil {
+		return respChatDataCheckDebugMode{}, err
+	}
+	if bizErr := resp.TryIntoErr(); bizErr != nil {
+		return respChatDataCheckDebugMode{}, bizErr
 	}
 
 	return resp, nil
