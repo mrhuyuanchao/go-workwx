@@ -138,8 +138,10 @@ type FailItem struct {
 
 // GetRecommendDialogResult 获取话术推荐模型结果
 type GetRecommendDialogResult struct {
-	// MessageId 话术推荐的结果
-	MessageId string `json:"response_data"`
+	// Status 任务状态 0-任务进行中；1-任务已完成；2-任务失败
+	Status TaskStatus `json:"status"`
+	// ResponseData 话术推荐的结果
+	ResponseData string `json:"response_data"`
 	// FailList 失败项列表
 	FailList *[]FailItem `json:"fail_list,omitempty"`
 }
@@ -303,4 +305,17 @@ const (
 
 	// ZoneEventTypeChatArchiveExportFinished 会话内容导出完成通知
 	ZoneEventTypeChatArchiveExportFinished ZoneEventType = "chat_archive_export_finished"
+)
+
+// TaskStatus 模型任务执行状态
+
+type TaskStatus int
+
+const (
+	// TaskStatusProcessing 任务进行中
+	TaskStatusProcessing TaskStatus = 0
+	// TaskStatusFinished 任务已完成
+	TaskStatusFinished TaskStatus = 1
+	// TaskStatusFailed 任务失败
+	TaskStatusFailed TaskStatus = 2
 )

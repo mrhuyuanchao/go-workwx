@@ -113,10 +113,11 @@
 
 ### `GetRecommendDialogResult` 获取话术推荐模型结果
 
- Name        | JSON                  | Type          | Doc     
-:------------|:----------------------|:--------------|:--------
- `MessageId` | `response_data`       | `string`      | 话术推荐的结果 
- `FailList`  | `fail_list,omitempty` | `*[]FailItem` | 失败项列表   
+ Name           | JSON                  | Type          | Doc                         
+:---------------|:----------------------|:--------------|:----------------------------
+ `Status`       | `status`              | `TaskStatus`  | 任务状态 0-任务进行中；1-任务已完成；2-任务失败 
+ `ResponseData` | `response_data`       | `string`      | 话术推荐的结果                     
+ `FailList`     | `fail_list,omitempty` | `*[]FailItem` | 失败项列表                       
 
 ### `KnowledgeBaseListResult` 知识集列表结果
 
@@ -282,6 +283,22 @@ ZoneEventTypeAuthKnowledgeBase ZoneEventType = "auth_knowledge_base"
 
 // ZoneEventTypeChatArchiveExportFinished 会话内容导出完成通知
 ZoneEventTypeChatArchiveExportFinished ZoneEventType = "chat_archive_export_finished"
+)
+
+```
+
+```go
+// TaskStatus 模型任务执行状态
+
+type TaskStatus int
+
+const (
+// TaskStatusProcessing 任务进行中
+TaskStatusProcessing TaskStatus = 0
+// TaskStatusFinished 任务已完成
+TaskStatusFinished TaskStatus = 1
+// TaskStatusFailed 任务失败
+TaskStatusFailed TaskStatus = 2
 )
 
 ```
