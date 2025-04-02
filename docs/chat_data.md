@@ -25,17 +25,17 @@
 
 ### `Sender` 消息发送人
 
- Name   | JSON   | Type     | Doc                                                             
-:-------|:-------|:---------|:----------------------------------------------------------------
-| `Id`   | `id`   | `string` | 消息发送者的id，当消息发送者为员工时，该字段为员工的userid；当消息发送者的身份为外部联系人时，该字段为外部联系人的id 
-| `Type` | `type` | `int`    | 消息发送者身份类型。1：员工；2：外部联系人; 3：机器人                                   
+ Name   | JSON   | Type         | Doc                                                             
+:-------|:-------|:-------------|:----------------------------------------------------------------
+| `Id`   | `id`   | `string`     | 消息发送者的id，当消息发送者为员工时，该字段为员工的userid；当消息发送者的身份为外部联系人时，该字段为外部联系人的id 
+| `Type` | `type` | `MsgObjType` | 消息发送者身份类型。1：员工；2：外部联系人; 3：机器人                                   
 
 ### `ReceiverList` 消息接收者列表
 
- Name   | JSON   | Type     | Doc                                                             
-:-------|:-------|:---------|:----------------------------------------------------------------
-| `Id`   | `id`   | `string` | 消息发送者的id，当消息发送者为员工时，该字段为员工的userid；当消息发送者的身份为外部联系人时，该字段为外部联系人的id 
-| `Type` | `type` | `int`    | 消息发送者身份类型。1：员工；2：外部联系人; 3：机器人                                   
+ Name   | JSON   | Type         | Doc                                                             
+:-------|:-------|:-------------|:----------------------------------------------------------------
+| `Id`   | `id`   | `string`     | 消息发送者的id，当消息发送者为员工时，该字段为员工的userid；当消息发送者的身份为外部联系人时，该字段为外部联系人的id 
+| `Type` | `type` | `MsgObjType` | 消息发送者身份类型。1：员工；2：外部联系人; 3：机器人                                   
 
 ### `ServiceEncryptInfo` 加密内容
 
@@ -247,6 +247,17 @@ MsgTypeGroupChain MsgType = 26
 MsgTypeMarkdown MsgType = 27
 // MsgTypeNote 笔记
 MsgTypeNote MsgType = 28
+)
+
+type MsgObjType int
+
+const (
+// MsgObjTypeEmployee 员工
+MsgObjTypeEmployee = 1
+// MsgObjTypeExternalContact 外部联系人
+MsgObjTypeExternalContact = 2
+// MsgObjTypeRobot 机器人
+MsgObjTypeRobot = 3
 )
 
 ```
