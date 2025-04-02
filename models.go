@@ -2077,18 +2077,49 @@ type resGetUserBehaviorData struct {
 	BehaviorData []BehaviorDataInfo `json:"behavior_data"`
 }
 
+type reqCallProgramRequestData struct {
+	Func    string                 `json:"func"`
+	FuncReq map[string]interface{} `json:"func_req"`
+}
+
+type MsgList struct {
+	MsgId       string      `json:"msg_id"`
+	EncryptInfo EncryptInfo `json:"encrypt_info"`
+}
+
+type EncryptInfo struct {
+	SecretKey string `json:"secret_key"`
+}
+
 // reqKfSyncMsg 同步调用专区程序
 type reqChatDataSyncCallProgram struct {
-	ProgramId   string `json:"program_id"`
-	AbilityId   string `json:"ability_id"`
-	NotifyId    string `json:"notify_id"`
-	RequestData string `json:"request_data"`
+	ProgramId   string                    `json:"program_id"`
+	AbilityId   string                    `json:"ability_id"`
+	NotifyId    string                    `json:"notify_id"`
+	RequestData reqCallProgramRequestData `json:"request_data"`
 }
 
 var _ bodyer = reqChatDataSyncCallProgram{}
 
 func (x reqChatDataSyncCallProgram) intoBody() ([]byte, error) {
-	return marshalIntoJSONBody(x)
+	requestDataBytes, err := json.Marshal(map[string]interface{}{"input": x.RequestData})
+	if err != nil {
+		return nil, err
+	}
+
+	type req struct {
+		ProgramId   string `json:"program_id"`
+		AbilityId   string `json:"ability_id"`
+		NotifyId    string `json:"notify_id"`
+		RequestData string `json:"request_data"`
+	}
+
+	return marshalIntoJSONBody(req{
+		ProgramId:   x.ProgramId,
+		AbilityId:   x.AbilityId,
+		NotifyId:    x.NotifyId,
+		RequestData: string(requestDataBytes),
+	})
 }
 
 // respKfSyncMsg 同步调用专区程序 响应
@@ -2096,6 +2127,16 @@ type respChatDataSyncCallProgram struct {
 	respCommon
 
 	ResponseData string `json:"response_data"`
+}
+
+func (r respChatDataSyncCallProgram) intoResult(resultObj any) error {
+	err := json.Unmarshal([]byte(r.ResponseData), &map[string]interface{}{
+		"output": resultObj,
+	})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 // reqKfSyncMsg 异步调用专区程序
@@ -2108,7 +2149,23 @@ type reqChatDataAsyncProgramTask struct {
 var _ bodyer = reqChatDataAsyncProgramTask{}
 
 func (x reqChatDataAsyncProgramTask) intoBody() ([]byte, error) {
-	return marshalIntoJSONBody(x)
+	requestDataBytes, err := json.Marshal(map[string]interface{}{"input": x.RequestData})
+	if err != nil {
+		return nil, err
+	}
+
+	type req struct {
+		ProgramId   string `json:"program_id"`
+		AbilityId   string `json:"ability_id"`
+		NotifyId    string `json:"notify_id"`
+		RequestData string `json:"request_data"`
+	}
+
+	return marshalIntoJSONBody(req{
+		ProgramId:   x.ProgramId,
+		AbilityId:   x.AbilityId,
+		RequestData: string(requestDataBytes),
+	})
 }
 
 // respKfSyncMsg 异步调用专区程序 响应

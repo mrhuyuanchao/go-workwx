@@ -2,7 +2,163 @@
 
 package workwx
 
-// AsyncProgramResult 客服账号
+// SyncMsgDataResult 会话记录结果
+type SyncMsgDataResult struct {
+	// HasMore 是否还有更多数据。0-否；1-是。
+	HasMore string `json:"has_more"`
+	// NextCursor 下次调用带上该值，则从当前的位置继续往后拉，以实现增量拉取。强烈建议对该字段入库保存，每次请求读取带上，请求结束后更新。避免因意外丢，导致必须从头开始拉取，引起消息延迟。
+	NextCursor string `json:"next_cursor"`
+	// MsgList 消息列表，按消息发送时间升序排序
+	MsgList []SyncMsg `json:"msg_list"`
+}
+
+// SyncMsg 消息列表
+type SyncMsg struct {
+	// MsgId 每条消息对应的msgid
+	MsgId string `json:"msgid"`
+	// Sender 	消息发送者
+	Sender Sender `json:"sender"`
+	// ChatId 群ID，当消息是群消息的时候会返回该字段
+	ChatId string `json:"chatid"`
+	// ReceiverList 消息接收者列表。当自己发给自己消息时该字段为发送者ID，其他情况不包含发送者
+	ReceiverList []ReceiverList `json:"receiver_list"`
+	// SendTime 消息发送时间对应的unix时间戳
+	SendTime int64 `json:"send_time"`
+	// MsgType 消息类型
+	MsgType MsgType `json:"msgtype"`
+	// ServiceEncryptInfo 加密内容
+	ServiceEncryptInfo ServiceEncryptInfo `json:"service_encrypt_info"`
+	// ExtraInfo 额外信息
+	ExtraInfo ExtraInfo `json:"extra_info"`
+}
+
+// Sender 消息发送人
+type Sender struct {
+	// Id 消息发送者的id，当消息发送者为员工时，该字段为员工的userid；当消息发送者的身份为外部联系人时，该字段为外部联系人的id
+	Id string `json:"id"`
+	// Type 消息发送者身份类型。1：员工；2：外部联系人; 3：机器人
+	Type int `json:"type"`
+}
+
+// ReceiverList 消息接收者列表
+type ReceiverList struct {
+	// Id 消息发送者的id，当消息发送者为员工时，该字段为员工的userid；当消息发送者的身份为外部联系人时，该字段为外部联系人的id
+	Id string `json:"id"`
+	// Type 消息发送者身份类型。1：员工；2：外部联系人; 3：机器人
+	Type int `json:"type"`
+}
+
+// ServiceEncryptInfo 加密内容
+type ServiceEncryptInfo struct {
+	// EncryptedSecretKey 加密后的密钥，使用设置公钥设置的公钥进行加密，需要应用后台用私钥解密后，才可在其他接口使用，例如模型分析接口等)
+	EncryptedSecretKey string `json:"encrypted_secret_key"`
+	// PublicKeyVer 公钥版本号
+	PublicKeyVer int `json:"public_key_ver"`
+}
+
+// ExtraInfo 额外信息
+type ExtraInfo struct {
+	// CallDuration 通话时长，单位秒。仅当消息类型为“音视频通话”或“音频存档”时返回
+	CallDuration int `json:"call_duration"`
+}
+
+// DoSyncJobResult 回调数据结果
+type DoSyncJobResult struct {
+	// EventType 事件类型
+	EventType ZoneEventType `json:"event_type"`
+	// Timestamp 时间戳(单位秒)
+	Timestamp int64 `json:"timestamp"`
+	// ChatArchiveAuditApproved 客户同意进行聊天内容存档事件数据
+	ChatArchiveAuditApproved *ChatArchiveAuditApprovedData `json:"chat_archive_audit_approved,omitempty"`
+	// ConversationNewMessage 产生会话回调通知数据
+	ConversationNewMessage *ConversationNewMessageData `json:"conversation_new_message,omitempty"`
+	// HitKeyword 命中关键词规则通知数据
+	HitKeyword *HitKeywordData `json:"hit_keyword,omitempty"`
+	// AuthKnowledgeBase 知识集管理回调数据
+	AuthKnowledgeBase *AuthKnowledgeBaseData `json:"auth_knowledge_base,omitempty"`
+	// ChatArchiveExportFinished 会话内容导出完成通知数据
+	ChatArchiveExportFinished *ChatArchiveExportFinishedData `json:"chat_archive_export_finished,omitempty"`
+}
+
+// ChatArchiveAuditApprovedData 客户同意进行聊天内容存档事件数据
+type ChatArchiveAuditApprovedData struct {
+	// UserID 企业成员UserID
+	UserID string `json:"userid"`
+	// ExternalUserID 外部联系人UserID
+	ExternalUserID string `json:"external_userid"`
+	// ChatID 群聊ID
+	ChatID string `json:"chatid"`
+}
+
+// ConversationNewMessageData 产生会话回调通知数据
+type ConversationNewMessageData struct {
+	// Token 会话token
+	Token string `json:"token"`
+}
+
+// HitKeywordData 命中关键词规则通知数据
+type HitKeywordData struct {
+	// Token 会话token
+	Token string `json:"token"`
+}
+
+// AuthKnowledgeBaseData 知识集管理回调数据
+type AuthKnowledgeBaseData struct {
+	// KnowledgeBaseID 知识库ID
+	KnowledgeBaseID string `json:"knowledge_base_id"`
+	// KnowledgeBaseName 知识库名称
+	KnowledgeBaseName string `json:"knowledge_base_name"`
+}
+
+// ChatArchiveExportFinishedData 会话内容导出完成通知数据
+type ChatArchiveExportFinishedData struct {
+	// JobID 任务ID
+	JobID string `json:"jobid"`
+}
+
+// CreateRecommendDialogTaskResult 创建话术推荐模型结果
+type CreateRecommendDialogTaskResult struct {
+	// JobID 任务ID
+	JobID string `json:"jobid"`
+	// FailList 失败项列表
+	FailList *[]FailItem `json:"fail_list,omitempty"`
+}
+
+// FailItem 失败项
+type FailItem struct {
+	// ErrCode 错误码
+	ErrCode int `json:"errcode"`
+	// ErrMsg 错误信息
+	ErrMsg string `json:"errmsg"`
+	// MsgID 消息ID
+	MsgID string `json:"msgid"`
+	// EncryptInfo 加密信息
+	EncryptInfo *EncryptInfo `json:"encrypt_info"`
+}
+
+// GetRecommendDialogResult 获取话术推荐模型结果
+type GetRecommendDialogResult struct {
+	// MessageId 话术推荐的结果
+	MessageId string `json:"response_data"`
+	// FailList 失败项列表
+	FailList *[]FailItem `json:"fail_list,omitempty"`
+}
+
+// KnowledgeBaseListResult 知识集列表结果
+type KnowledgeBaseListResult struct {
+	// KBInfoList 知识库信息列表
+	KBInfoList []KnowledgeBaseInfo `json:"kb_info_list"`
+}
+
+// KnowledgeBaseInfo 知识库信息
+type KnowledgeBaseInfo struct {
+	// KBID 知识库ID
+	KBID string `json:"kb_id"`
+	// KBName 知识库名称
+	KBName string `json:"kb_name"`
+}
+
+// AsyncProgramResult 异步任务结果
 type AsyncProgramResult struct {
 	// ResponseErrCode 上报异步任务结果中上报的errcode。代表专区程序返回的错误码
 	ResponseErrCode string `json:"response_errcode"`
@@ -21,4 +177,119 @@ const (
 	DebugModeStatusTypeOff DebugModeStatusType = 1
 	// ExternalUserTypeWorkWeChat 企业微信用户
 	DebugModeStatusTypeOn DebugModeStatusType = 2
+)
+
+// MsgType 	消息类型
+//
+// 0	暂不支持的消息类型
+// 1	文本
+// 2	图片
+// 3	表情
+// 4	链接
+// 5	小程序
+// 6	语音
+// 7	视频
+// 8	文件
+// 9	名片
+// 10	转发消息
+// 11	视频号
+// 12	日程
+// 13	红包
+// 14	地理位置
+// 15	快速会议
+// 16	待办
+// 17	投票
+// 18	在线文档
+// 19	图文消息
+// 20	图文混合消息
+// 21	音频存档
+// 22	音视频通话
+// 23	微盘文件
+// 24	同意会话存档
+// 25	拒绝会话存档
+// 26	群接龙
+// 27	markdown
+// 28	笔记
+type MsgType int
+
+const (
+	// MsgTypeUnsupported 暂不支持的消息类型
+	MsgTypeUnsupported MsgType = 0
+	// MsgTypeText 文本
+	MsgTypeText MsgType = 1
+	// MsgTypeImage 图片
+	MsgTypeImage MsgType = 2
+	// MsgTypeEmoji 表情
+	MsgTypeEmoji MsgType = 3
+	// MsgTypeLink 链接
+	MsgTypeLink MsgType = 4
+	// MsgTypeMiniProgram 小程序
+	MsgTypeMiniProgram MsgType = 5
+	// MsgTypeVoice 语音
+	MsgTypeVoice MsgType = 6
+	// MsgTypeVideo 视频
+	MsgTypeVideo MsgType = 7
+	// MsgTypeFile 文��
+	MsgTypeFile MsgType = 8
+	// MsgTypeCard 名片
+	MsgTypeCard MsgType = 9
+	// MsgTypeForward 转发消息
+	MsgTypeForward MsgType = 10
+	// MsgTypeChannels 视频号
+	MsgTypeChannels MsgType = 11
+	// MsgTypeSchedule 日程
+	MsgTypeSchedule MsgType = 12
+	// MsgTypeRedPacket 红包
+	MsgTypeRedPacket MsgType = 13
+	// MsgTypeLocation 地理位置
+	MsgTypeLocation MsgType = 14
+	// MsgTypeQuickMeeting 快速会议
+	MsgTypeQuickMeeting MsgType = 15
+	// MsgTypeTodo 待办
+	MsgTypeTodo MsgType = 16
+	// MsgTypeVote 投票
+	MsgTypeVote MsgType = 17
+	// MsgTypeOnlineDoc 在线文档
+	MsgTypeOnlineDoc MsgType = 18
+	// MsgTypeRichText 图文消息
+	MsgTypeRichText MsgType = 19
+	// MsgTypeMixedContent 图文混合消息
+	MsgTypeMixedContent MsgType = 20
+	// MsgTypeAudioArchive 音频存档
+	MsgTypeAudioArchive MsgType = 21
+	// MsgTypeAudioVideoCall 音视频通话
+	MsgTypeAudioVideoCall MsgType = 22
+	// MsgTypeWedriveFile 微盘文件
+	MsgTypeWedriveFile MsgType = 23
+	// MsgTypeAcceptArchive 同意会话存档
+	MsgTypeAcceptArchive MsgType = 24
+	// MsgTypeRejectArchive 拒绝会话存档
+	MsgTypeRejectArchive MsgType = 25
+	// MsgTypeGroupChain 群接龙
+	MsgTypeGroupChain MsgType = 26
+	// MsgTypeMarkdown markdown
+	MsgTypeMarkdown MsgType = 27
+	// MsgTypeNote 笔记
+	MsgTypeNote MsgType = 28
+)
+
+// ZoneEventType 专区程序接收事件通知
+
+type ZoneEventType string
+
+const (
+	// ZoneEventTypeChatArchiveAuditApprovedSingle 客户同意进行聊天内容存档事件回调
+	ZoneEventTypeChatArchiveAuditApprovedSingle ZoneEventType = "chat_archive_audit_approved_single"
+
+	// ZoneEventTypeConversationNewMessage 产生会话回调通知
+	ZoneEventTypeConversationNewMessage ZoneEventType = "conversation_new_message"
+
+	// ZoneEventTypeHitKeyword 命中关键词规则通知
+	ZoneEventTypeHitKeyword ZoneEventType = "hit_keyword"
+
+	// ZoneEventTypeAuthKnowledgeBase 知识集管理回调
+	ZoneEventTypeAuthKnowledgeBase ZoneEventType = "auth_knowledge_base"
+
+	// ZoneEventTypeChatArchiveExportFinished 会话内容导出完成通知
+	ZoneEventTypeChatArchiveExportFinished ZoneEventType = "chat_archive_export_finished"
 )
