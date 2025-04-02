@@ -5,7 +5,7 @@ package workwx
 // SyncMsgDataResult 会话记录结果
 type SyncMsgDataResult struct {
 	// HasMore 是否还有更多数据。0-否；1-是。
-	HasMore string `json:"has_more"`
+	HasMore int `json:"has_more"`
 	// NextCursor 下次调用带上该值，则从当前的位置继续往后拉，以实现增量拉取。强烈建议对该字段入库保存，每次请求读取带上，请求结束后更新。避免因意外丢，导致必须从头开始拉取，引起消息延迟。
 	NextCursor string `json:"next_cursor"`
 	// MsgList 消息列表，按消息发送时间升序排序

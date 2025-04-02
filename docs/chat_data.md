@@ -6,7 +6,7 @@
 
  Name         | JSON          | Type        | Doc                                                                                   
 :-------------|:--------------|:------------|:--------------------------------------------------------------------------------------
- `HasMore`    | `has_more`    | `string`    | 是否还有更多数据。0-否；1-是。                                                                     
+ `HasMore`    | `has_more`    | `int`       | 是否还有更多数据。0-否；1-是。                                                                     
  `NextCursor` | `next_cursor` | `string`    | 下次调用带上该值，则从当前的位置继续往后拉，以实现增量拉取。强烈建议对该字段入库保存，每次请求读取带上，请求结束后更新。避免因意外丢，导致必须从头开始拉取，引起消息延迟。 
 | `MsgList`    | `msg_list`    | `[]SyncMsg` | 消息列表，按消息发送时间升序排序                                                                      
 
@@ -119,16 +119,17 @@
  `FailList`  | `fail_list,omitempty` | `*[]FailItem` | 失败项列表   
 
 ### `KnowledgeBaseListResult` 知识集列表结果
- Name           | JSON           | Type                 | Doc
-:---------------|:---------------|:---------------------|:------------------
- `KBInfoList`   | `kb_info_list` | `[]KnowledgeBaseInfo`| 知识库信息列表
+
+ Name         | JSON           | Type                  | Doc     
+:-------------|:---------------|:----------------------|:--------
+ `KBInfoList` | `kb_info_list` | `[]KnowledgeBaseInfo` | 知识库信息列表 
 
 ### `KnowledgeBaseInfo` 知识库信息
 
- Name      | JSON      | Type     | Doc
-:----------|:----------|:---------|:------------------
- `KBID`    | `kb_id`   | `string` | 知识库ID
- `KBName`  | `kb_name` | `string` | 知识库名称
+ Name     | JSON      | Type     | Doc   
+:---------|:----------|:---------|:------
+ `KBID`   | `kb_id`   | `string` | 知识库ID 
+ `KBName` | `kb_name` | `string` | 知识库名称 
 
 ### `AsyncProgramResult` 异步任务结果
 
