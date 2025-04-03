@@ -2129,7 +2129,7 @@ type respChatDataSyncCallProgram struct {
 	ResponseData string `json:"response_data"`
 }
 
-func (r respChatDataSyncCallProgram) intoResult(resultObj any) error {
+func (r respChatDataSyncCallProgram) intoResult(resultObj interface{}) error {
 	err := json.Unmarshal([]byte(r.ResponseData), &map[string]interface{}{
 		"output": resultObj,
 	})
