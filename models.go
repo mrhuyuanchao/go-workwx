@@ -2130,9 +2130,7 @@ type respChatDataSyncCallProgram struct {
 }
 
 func (r respChatDataSyncCallProgram) intoResult(resultObj interface{}) error {
-	err := json.Unmarshal([]byte(r.ResponseData), &map[string]interface{}{
-		"output": resultObj,
-	})
+	err := json.Unmarshal([]byte(r.ResponseData), resultObj)
 	if err != nil {
 		return err
 	}
