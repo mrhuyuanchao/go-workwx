@@ -9,10 +9,11 @@ func (c *WorkwxApp) ChatDataSetReceiveCallback(programId string) error {
 }
 
 // ChatDataSyncCallProgramSyncMsg 调用专区默认的获取会话消息
-func (c *WorkwxApp) ChatDataSyncCallProgramSyncMsg(programId string, abilityId string, cursor string, token string, limit int) (*SyncMsgDataResult, error) {
+func (c *WorkwxApp) ChatDataSyncCallProgramSyncMsg(programId string, notifyId string, abilityId string, cursor string, token string, limit int) (*SyncMsgDataResult, error) {
 	resp, err := c.execChatDataSyncCallProgram(reqChatDataSyncCallProgram{
 		ProgramId: programId,
 		AbilityId: abilityId,
+		NotifyId:  notifyId,
 		RequestData: reqCallProgramRequestData{
 			Func: "sync_msg",
 			FuncReq: map[string]interface{}{
