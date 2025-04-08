@@ -1,7 +1,7 @@
 package workwx
 
 // ChatDataSetReceiveCallback 设置专区接收回调事件
-func (c *WorkwxApp) ChatDataSetReceiveCallback(programId string, callbackUrl string, token string, encodingAESKey string) error {
+func (c *WorkwxApp) ChatDataSetReceiveCallback(programId string) error {
 	_, err := c.execChatDataSetReceiveCallback(reqChatDataSetReceiveCallback{
 		ProgramId: programId,
 	})
