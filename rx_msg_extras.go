@@ -745,6 +745,36 @@ func (r *rxEventKfMsgOrEvent) GetToken() string {
 	return r.Token
 }
 
+// EventProgramNotify 客服接收消息和事件
+type EventProgramNotify interface {
+	messageKind
+
+	// GetNotifyId 通知ID
+	GetNotifyId() string
+
+	// GetNotifyScene 通知场景值
+	GetNotifyScene() string
+}
+
+var _ EventProgramNotify = (*rxEventProgramNotify)(nil)
+
+func (r *rxEventProgramNotify) formatInto(w io.Writer) {
+	_, _ = fmt.Fprintf(
+		w,
+		"OpenKfID: %#v, Token: %#v",
+		r.NotifyId,
+		r.NotifyScene,
+	)
+}
+
+func (r *rxEventProgramNotify) GetNotifyId() string {
+	return r.NotifyId
+}
+
+func (r *rxEventProgramNotify) GetNotifyScene() string {
+	return r.NotifyScene
+}
+
 func (r rxEventUnknown) formatInto(w io.Writer) {
 	_, _ = fmt.Fprintf(w, "Raw: %#v", r.Raw)
 }

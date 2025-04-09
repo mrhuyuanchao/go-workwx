@@ -307,6 +307,13 @@ Name|XML|Type|Doc
 `OpenKfID`|`OpenKfId`|`string`|有新消息的客服账号。可通过sync_msg接口指定open_kfid获取此客服账号的消息
 `Token`|`Token`|`string`|调用拉取消息接口时，需要传此token，用于校验请求的合法性
 
+### `rxEventProgramNotify` 接受的事件消息，数据与智能专区通知事件
+
+Name|XML|Type|Doc
+:---|:--|:---|:--
+`NotifyId`|`NotifyId`|`string`|通知id，专区通过获取NotifyId接口生成。10分钟内有效，不超过128字节
+`NotifyScene`|`NotifyScene`|`string`|通知场景值，为调用sdk接口专区调用应用时指定的notify_scene
+
 ### `rxEventUnknown` 接受的事件消息，未定义的事件类型
 
 Name|XML|Type|Doc

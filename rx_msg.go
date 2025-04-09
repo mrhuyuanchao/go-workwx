@@ -212,6 +212,12 @@ func (m *RxMessage) EventKfMsgOrEvent() (*rxEventKfMsgOrEvent, bool) {
 	return y, ok
 }
 
+// EventProgramNotify 如果消息为数据与智能专区通知事件，则拿出相应消息参数，否则返回 nil, false
+func (m *RxMessage) EventProgramNotify() (*rxEventProgramNotify, bool) {
+	y, ok := m.extras.(*rxEventProgramNotify)
+	return y, ok
+}
+
 // EventUnknown  未定义的event类型
 func (m *RxMessage) EventUnknown() (*rxEventUnknown, bool) {
 	y, ok := m.extras.(*rxEventUnknown)

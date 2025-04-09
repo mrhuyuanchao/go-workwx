@@ -377,6 +377,14 @@ type rxEventKfMsgOrEvent struct {
 	Token string `xml:"Token"`
 }
 
+// rxEventProgramNotify 接受的事件消息，数据与智能专区通知事件
+type rxEventProgramNotify struct {
+	// NotifyId 通知id，专区通过获取NotifyId接口生成。10分钟内有效，不超过128字节
+	NotifyId string `xml:"NotifyId"`
+	// NotifyScene 通知场景值，为调用sdk接口专区调用应用时指定的notify_scene
+	NotifyScene string `xml:"NotifyScene"`
+}
+
 // rxEventUnknown 接受的事件消息，未定义的事件类型
 type rxEventUnknown struct {
 	// EventType 事件类型
