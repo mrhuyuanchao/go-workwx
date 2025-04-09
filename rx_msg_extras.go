@@ -185,6 +185,13 @@ func extractMessageExtras(common rxMessageCommon, body []byte) (messageKind, err
 				return nil, err
 			}
 			return &x, nil
+		case EventTypeProgramNotify:
+			var x rxEventProgramNotify
+			err := xml.Unmarshal(body, &x)
+			if err != nil {
+				return nil, err
+			}
+			return &x, nil
 
 		default:
 			// 返回一个未定义的事件类型
