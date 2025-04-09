@@ -64,6 +64,9 @@ const EventTypeChangeContact EventType = "change_contact"
 // EventTypeKfMsgOrEvent 客服回调通知
 const EventTypeKfMsgOrEvent EventType = "kf_msg_or_event"
 
+// EventTypeProgramNotify 数据与智能专区回调通知
+const EventTypeProgramNotify EventType = "program_notify"
+
 // ChangeType 变更类型
 type ChangeType string
 
