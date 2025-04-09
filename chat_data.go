@@ -8,12 +8,35 @@ func (c *WorkwxApp) ChatDataSetReceiveCallback(programId string) error {
 	return err
 }
 
-// ChatDataSyncCallProgramSyncMsg 调用专区默认的获取会话消息
-func (c *WorkwxApp) ChatDataSyncCallProgramSyncMsg(programId string, notifyId string, abilityId string, cursor string, token string, limit int) (*SyncMsgDataResult, error) {
+// ChatDataSyncCallProgramFirstSyncMsg 调用专区默认的第一次获取会话消息
+func (c *WorkwxApp) ChatDataSyncCallProgramFirstSyncMsg(programId string, abilityId string, token string, limit int) (*SyncMsgDataResult, error) {
 	resp, err := c.execChatDataSyncCallProgram(reqChatDataSyncCallProgram{
 		ProgramId: programId,
 		AbilityId: abilityId,
-		NotifyId:  notifyId,
+		RequestData: reqCallProgramRequestData{
+			Func: "sync_msg",
+			FuncReq: map[string]interface{}{
+				"token": token,
+				"limit": limit,
+			},
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+	var obj SyncMsgDataResult
+	err = resp.intoResult(&obj)
+	if err != nil {
+		return nil, err
+	}
+	return &obj, nil
+}
+
+// ChatDataSyncCallProgramSyncMsg 调用专区默认的获取会话消息
+func (c *WorkwxApp) ChatDataSyncCallProgramSyncMsg(programId string, abilityId string, cursor string, token string, limit int) (*SyncMsgDataResult, error) {
+	resp, err := c.execChatDataSyncCallProgram(reqChatDataSyncCallProgram{
+		ProgramId: programId,
+		AbilityId: abilityId,
 		RequestData: reqCallProgramRequestData{
 			Func: "sync_msg",
 			FuncReq: map[string]interface{}{
@@ -88,7 +111,7 @@ func (c *WorkwxApp) ChatDataSyncGetRecommendDialogResult(programId string, abili
 		RequestData: reqCallProgramRequestData{
 			Func: "get_recommend_dialog_result",
 			FuncReq: map[string]interface{}{
-				"job_id": jobId,
+				"jobid": jobId,
 			},
 		},
 	})

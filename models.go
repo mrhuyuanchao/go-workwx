@@ -2083,7 +2083,7 @@ type reqCallProgramRequestData struct {
 }
 
 type MsgList struct {
-	MsgId       string      `json:"msg_id"`
+	MsgId       string      `json:"msgid"`
 	EncryptInfo EncryptInfo `json:"encrypt_info"`
 }
 
@@ -2110,7 +2110,7 @@ func (x reqChatDataSyncCallProgram) intoBody() ([]byte, error) {
 	type req struct {
 		ProgramId   string `json:"program_id"`
 		AbilityId   string `json:"ability_id"`
-		NotifyId    string `json:"notify_id"`
+		NotifyId    string `json:"notify_id,omitempty"`
 		RequestData string `json:"request_data"`
 	}
 
