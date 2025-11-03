@@ -336,6 +336,7 @@ Name|JSON|Type|Doc
 :---|:---|:---|:--
 `ChatType`|`chat_type`|`ChatType`| 群发任务的类型，默认为single，表示发送给客户，group表示发送给客户群
 `ExternalUserID`|`external_userid`|`[]string`| 客户的外部联系人id列表，仅在chat_type为single时有效，不可与sender同时为空，最多可传入1万个客户
+`ChatIdList`|`chat_id_list`|`[]string`| 客户群id列表，仅在chat_type为group时有效，最多可一次指定2000个客户群。指定群id之后，收到任务的群主无须再选择客户群，仅对4.1.10及以上版本的企业微信终端生效
 `Sender`|`sender`|`string`| 发送企业群发消息的成员userid，当类型为发送给客户群时必填
 `Text`|`text`|`Text`| 消息文本,最多4000个字节
 `Attachments`|`attachments`|`[]Attachments`| 附件，最多支持添加9个附件
